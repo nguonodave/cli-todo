@@ -38,6 +38,8 @@ func main() {
 			fmt.Println(tasks)
 		} else if input == "2" {
 			view(tasks)
+		} else if input == "3" {
+			tasks = delete(tasks)
 		} else if input == "4" {
 			update(tasks)
 		} else if input == "5" {
@@ -64,9 +66,9 @@ func add(t []Task, id int) []Task {
 	}
 
 	task := Task{
-		ID: id,
+		ID:          id,
 		Description: desc,
-		Priority: prio,
+		Priority:    prio,
 	}
 
 	t = append(t, task)
@@ -92,7 +94,7 @@ func update(t []Task) {
 		return
 	}
 
-	if id >  len(t) {
+	if id > len(t) {
 		fmt.Println("id not found")
 		return
 	}
@@ -118,6 +120,30 @@ func update(t []Task) {
 	taskToUpdate.Description = desc
 	taskToUpdate.Priority = prio
 	t[id-1] = taskToUpdate
+}
 
-	// return t
+func delete(t []Task) []Task {
+	var id int
+	fmt.Print("enter task id: ")
+	_, idErr := fmt.Scan(&id)
+	if idErr != nil {
+		fmt.Println("an error occured while scanning the priority", idErr)
+		return t
+	}
+
+	if id > len(t) {
+		fmt.Println("id not found")
+		return t
+	}
+
+	taskToDelete := t[id-1]
+	newtasks := []Task{}
+
+	for _, v := range t {
+		if v != taskToDelete {
+			newtasks = append(newtasks, v)
+		}
+	}
+
+	return newtasks
 }
