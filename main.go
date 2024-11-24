@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 func main() {
 	fmt.Println(
@@ -12,4 +16,11 @@ func main() {
 * 4 to Update Task.
 * 5 to Exit the program.`,
 	)
+	fmt.Println()
+
+	scanner := bufio.NewScanner(os.Stdout)
+	for scanner.Scan() {
+		input := scanner.Text()
+		fmt.Println(input)
+	}
 }
