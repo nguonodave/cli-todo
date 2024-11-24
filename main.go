@@ -86,6 +86,11 @@ func view(t []Task) {
 }
 
 func update(t []Task) {
+	if len(t) == 0 {
+		fmt.Println("no tasks")
+		return
+	}
+
 	var id int
 	fmt.Print("enter task id: ")
 	_, idErr := fmt.Scan(&id)
@@ -94,32 +99,37 @@ func update(t []Task) {
 		return
 	}
 
-	if id > len(t) {
-		fmt.Println("id not found")
-		return
+	idFound := false
+
+	for i := range t {
+		if t[i].ID == id {
+			var desc string
+			fmt.Print("update desc: ")
+			_, descErr := fmt.Scan(&desc)
+			if descErr != nil {
+				fmt.Println("an error occured while scanning the description", descErr)
+				return
+			}
+
+			var prio int
+			fmt.Print("update prio: ")
+			_, prioErr := fmt.Scan(&prio)
+			if prioErr != nil {
+				fmt.Println("an error occured while scanning the priority", prioErr)
+				return
+			}
+
+			t[i].Description = desc
+			t[i].Priority = prio
+			idFound = true
+			break
+		}
 	}
 
-	taskToUpdate := t[id-1]
-
-	var desc string
-	fmt.Print("update desc: ")
-	_, descErr := fmt.Scan(&desc)
-	if descErr != nil {
-		fmt.Println("an error occured while scanning the description", descErr)
+	if !idFound {
+		fmt.Println("no id")
 		return
 	}
-
-	var prio int
-	fmt.Print("update prio: ")
-	_, prioErr := fmt.Scan(&prio)
-	if prioErr != nil {
-		fmt.Println("an error occured while scanning the priority", prioErr)
-		return
-	}
-
-	taskToUpdate.Description = desc
-	taskToUpdate.Priority = prio
-	t[id-1] = taskToUpdate
 }
 
 func delete(t []Task) []Task {
