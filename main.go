@@ -38,6 +38,8 @@ func main() {
 			fmt.Println(tasks)
 		} else if input == "2" {
 			view(tasks)
+		} else if input == "5" {
+			os.Exit(0)
 		}
 	}
 }
