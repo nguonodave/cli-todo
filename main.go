@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"sort"
 )
 
 type Task struct {
@@ -34,7 +35,9 @@ func main() {
 		if input == "1" {
 			tasks = add(tasks, id)
 			id++
-			// fmt.Println(tasks)
+			fmt.Println(tasks)
+		} else if input == "2" {
+			view(tasks)
 		}
 	}
 }
@@ -64,4 +67,14 @@ func add(t []Task, id int) []Task {
 
 	t = append(t, task)
 	return t
+}
+
+func view(t []Task) {
+	sort.Slice(t, func(i, j int) bool {
+		return t[i].Priority < t[j].Priority
+	})
+
+	for _, v := range t {
+		fmt.Println(v)
+	}
 }
