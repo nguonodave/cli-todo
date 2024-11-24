@@ -38,6 +38,8 @@ func main() {
 			fmt.Println(tasks)
 		} else if input == "2" {
 			view(tasks)
+		} else if input == "4" {
+			update(tasks)
 		} else if input == "5" {
 			os.Exit(0)
 		}
@@ -79,4 +81,43 @@ func view(t []Task) {
 	for _, v := range t {
 		fmt.Println(v)
 	}
+}
+
+func update(t []Task) {
+	var id int
+	fmt.Print("enter task id: ")
+	_, idErr := fmt.Scan(&id)
+	if idErr != nil {
+		fmt.Println("an error occured while scanning the priority", idErr)
+		return
+	}
+
+	if id >  len(t) {
+		fmt.Println("id not found")
+		return
+	}
+
+	taskToUpdate := t[id-1]
+
+	var desc string
+	fmt.Print("update desc: ")
+	_, descErr := fmt.Scan(&desc)
+	if descErr != nil {
+		fmt.Println("an error occured while scanning the description", descErr)
+		return
+	}
+
+	var prio int
+	fmt.Print("update prio: ")
+	_, prioErr := fmt.Scan(&prio)
+	if prioErr != nil {
+		fmt.Println("an error occured while scanning the priority", prioErr)
+		return
+	}
+
+	taskToUpdate.Description = desc
+	taskToUpdate.Priority = prio
+	t[id-1] = taskToUpdate
+
+	// return t
 }
